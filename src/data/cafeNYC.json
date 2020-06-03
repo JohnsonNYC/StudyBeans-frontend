@@ -1,0 +1,151 @@
+{
+  "data": [
+    {
+      "name": "Cloister CAFE",
+      "address": "238 East 9th Street",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [
+        40.729308,
+        -73.987899
+      ]
+    },
+    {
+      "name": "THE SCRATCHER CAFE",
+      "address": "209 East 5th Street",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.727693, -73.990461]
+    },
+    {
+      "name": "La Sultana Cafe",
+      "address": "124 East 4th Street",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.725384, -73.987738]
+    },
+    {
+      "name": "Barnes & Noble Cafe",
+      "address": "33 East 17th Street",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.736966, -73.989603]
+    },
+    {
+      "name": "PIERRE LOTI CAFE WINE BAR",
+      "address": "53 Irving Place",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.736125, -73.987550]
+    },
+    {
+      "name": "JENNIFER CAFE",
+      "address": "133 East 4th Street",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.725382, -73.987220]
+    },
+    {
+      "name": "Third North Cafe",
+      "address": "75 3rd Ave",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.731619, -73.987843]
+    },
+    {
+      "name": "Thailand Cafe",
+      "address": "95 2nd Ave",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.727243, -73.989039]
+    },
+    {
+      "name": "CITY GOURMET CAFE",
+      "address": "238 East 14 Street",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.732409, -73.985789]
+    },
+    {
+      "name": "C&B at Paper Daisy",
+      "address": "39 St Marks Pl",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.728562, -73.987145]
+    },
+    {
+      "name": "Hungry Ghost",
+      "address": "721 Broadway",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.729458, -73.993582]
+    },
+    {
+      "name": "Cafe Manna",
+      "address": "Carlyle Court, 20 E 16th St",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.736769, -73.991460]
+    },
+    {
+      "name": "Astor Plate",
+      "address": "26 Astor Pl #7050",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.729638, -73.991142]
+    },
+    {
+      "name": "Le Cafe Coffee",
+      "address": "7 E 14th St",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.735794, -73.992726]
+    },
+    {
+      "name": "Ogawa",
+      "address": "36 E 4th St",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.727208, -73.992285]
+    },
+    {
+      "name": "Rakka Cafe",
+      "address": "81 St Marks Pl",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.727891, -73.985458]
+    },
+    {
+      "name": "Atlas Cafe",
+      "address": "73 2nd Ave",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.726500, -73.989539]
+    },
+    {
+      "name": "Brooks Brothers Red Fleece Cafe",
+      "address": "901 Broadway At, E 20th St",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10003",
+      "coordinates": [40.739187, -73.990005]
+    }
+  ]
+}

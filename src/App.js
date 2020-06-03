@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import {
+  GoogleMap,
+  withScriptjs,
+  withGoogleMap,
+  Marker
+} from 'react-google-maps'
 
-function App() {
+
+import * as cafeData from './data/cafeNYC'
+
+function Map() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <GoogleMap
+      defaultZoom={10}
+      defaultCenter={{ lat: 40.719570, lng: -74.008392 }}>
+      {cafeData.data.map((cafe, index) => {
+        return <Marker key={index} position={{lat: cafe.coordinates[0], lng:cafe.coordinates[1]}}/>
+      })}
+    </GoogleMap>
+  )
 }
 
-export default App;
+const WrappedMap = withScriptjs(withGoogleMap(Map))
+
+export default class App extends Component {
+  state={
+    place:null 
+  }
+
+  render() {
+    console.log(cafeData)
+    return (
+      <div style={{ width: '100vw', height: '100vh' }}>
+        <WrappedMap
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_API_KEY}`}
+          loadingElement={<div style={{ height: '100%' }} />}
+          containerElement={<div style={{ height: '100%' }} />}
+          mapElement={<div style={{ height: '100%' }} />}
+        />
+      </div>
+    );
+  }
+}
