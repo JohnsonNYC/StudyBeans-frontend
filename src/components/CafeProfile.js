@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Rating from './Rating'
 const shopURL = 'http://localhost:3000/shops'
+const reservationURL = 'http://localhost:3000/reservations'
 
 class CafeProfile extends Component {
     state = {
@@ -8,7 +9,7 @@ class CafeProfile extends Component {
         seats: 5,
         comment: ''
     }
-//fetches the information for one shop as well as the ratings 
+    //fetches the information for one shop as well as the ratings 
     componentDidMount() {
         fetch(`${shopURL}/${this.props.match.params.id}`)
             .then(resp => resp.json())
@@ -16,6 +17,33 @@ class CafeProfile extends Component {
     }
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
+
+    handleReservation = () => {
+        const { cafe } = this.state
+        const { currentUser } = this.props
+
+        if (currentUser !== null) {
+            let configObj = {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: currentUser.id,
+                    shop_id: cafe.id,
+                    seats: 4,
+                    time: new Date().toLocaleTimeString()
+                })
+            }
+            fetch(reservationURL, configObj)
+                .then(resp => resp.json())
+                .then(res => console.log(res))
+        } else {
+            alert('please sign in')
+            this.props.history.push('/login')            
+        }
+    }
 
     renderCafe = () => {
         const { cafe } = this.state
@@ -30,7 +58,7 @@ class CafeProfile extends Component {
                         return <Rating key={rating.id} cafe={cafe} rating={rating} />
                     }
                 })}
-                <button>Reserve</button>
+                <button onClick={this.handleReservation/*create your reservation*/}>Reserve</button>
                 <form>
                     <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
                     <input type='submit' />
@@ -41,8 +69,10 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
-        console.log('props', this.props)
-        console.log('state', this.state)
+        const { currentUser } = this.props
+        console.log('user_id', currentUser)
+        console.log('cafe_id', cafe)
+        // console.log(this.handleReservation())
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
