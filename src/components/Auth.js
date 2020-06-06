@@ -80,7 +80,6 @@ class Auth extends Component {
     }
     render() {
         const { isNewUser } = this.state
-        console.log('state', this.state)
         return (
             <div>
                 <h3>{isNewUser ? 'Sign Up' : 'Login'}</h3>
