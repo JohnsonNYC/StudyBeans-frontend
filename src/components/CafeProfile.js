@@ -6,20 +6,30 @@ const reservationURL = 'http://localhost:3000/reservations'
 class CafeProfile extends Component {
     state = {
         cafe: null,
-        seats: 5,
-        comment: ''
+        seats: null,
+        comment: '',
+        value: 0 // controlled form for dropdown
     }
     //fetches the information for one shop as well as the ratings 
     componentDidMount() {
         fetch(`${shopURL}/${this.props.match.params.id}`)
             .then(resp => resp.json())
-            .then(cafe => { this.setState({ cafe }); })
+            .then(cafe => {
+                this.setState({
+                    cafe: cafe,
+                    seats: cafe.seats
+                })
+            })
     }
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
 
+    handleDropdown = (e) => {
+        this.setState({ value: parseInt(e.target.value) })
+    }
+
     handleReservation = () => {
-        const { cafe } = this.state
+        const { cafe, value } = this.state
         const { currentUser } = this.props
 
         if (currentUser !== null) {
@@ -32,26 +42,30 @@ class CafeProfile extends Component {
                 body: JSON.stringify({
                     user_id: currentUser.id,
                     shop_id: cafe.id,
-                    seats: 4,
+                    seats: value,
                     time: new Date().toLocaleTimeString()
                 })
             }
             fetch(reservationURL, configObj)
                 .then(resp => resp.json())
                 .then(res => console.log(res))
+
+            fetch(`http://localhost:3000/shops/${cafe.id}`, {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({
+                    seats: cafe.seats - value
+                })
+            }).then(resp => resp.json()).then(cafe => this.setState({ seats: cafe.seats }))
+            
         } else {
             alert('please sign in')
             this.props.history.push('/login')
         }
     }
-
-
-    // const arr = Array.from(Array(cafe.seats + 1).keys()).slice(1);
-    // arr.forEach(element =>{
-    //     return <option value={element}>{element}</option>
-    // })
-
-
 
 
     renderCafe = () => {
@@ -61,14 +75,13 @@ class CafeProfile extends Component {
         for (let i = 0; i < cafe.seats; i++) {
             seats.push(<option value={i + 1}>{i + 1}</option>)
         }
-        console.log('seats',seats)
         return (
             <div className='cafe-profile'>
                 <div>{cafe.name}</div>
                 <div>{cafe.address}</div>
-                <div>Available Seats: {cafe.seats}</div>
+                <div>Available Seats: {this.state.seats}</div>
 
-                <select>
+                <select value={this.state.value} onChange={this.handleDropdown}>
                     {seats.map(option => {
                         return option
                     })}
@@ -79,7 +92,7 @@ class CafeProfile extends Component {
                         return <Rating key={rating.id} cafe={cafe} rating={rating} />
                     }
                 })}
-                <button onClick={this.handleReservation/*create your reservation*/}>Reserve</button>
+                <button onClick={this.handleReservation}>Reserve</button>
                 <form>
                     <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
                     <input type='submit' />
@@ -90,10 +103,7 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
-        const { currentUser } = this.props
-        console.log('user_id', currentUser)
-        console.log('cafe_id', cafe)
-        // console.log(this.handleReservation())
+        // console.log(`http://localhost:3000/shops/${cafe.id}`)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
