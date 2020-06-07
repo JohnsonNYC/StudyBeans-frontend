@@ -41,18 +41,39 @@ class CafeProfile extends Component {
                 .then(res => console.log(res))
         } else {
             alert('please sign in')
-            this.props.history.push('/login')            
+            this.props.history.push('/login')
         }
     }
+
+
+    // const arr = Array.from(Array(cafe.seats + 1).keys()).slice(1);
+    // arr.forEach(element =>{
+    //     return <option value={element}>{element}</option>
+    // })
+
+
+
 
     renderCafe = () => {
         const { cafe } = this.state
         const { ratings } = this.props
+        let seats = []
+        for (let i = 0; i < cafe.seats; i++) {
+            seats.push(<option value={i + 1}>{i + 1}</option>)
+        }
+        console.log('seats',seats)
         return (
             <div className='cafe-profile'>
                 <div>{cafe.name}</div>
                 <div>{cafe.address}</div>
-                <div>Available Seats: {this.state.seats}</div>
+                <div>Available Seats: {cafe.seats}</div>
+
+                <select>
+                    {seats.map(option => {
+                        return option
+                    })}
+                </select>
+
                 {ratings.map((rating) => {
                     if (rating.shop.id === cafe.id) {
                         return <Rating key={rating.id} cafe={cafe} rating={rating} />
