@@ -13,7 +13,7 @@ import Home from './components/Home'
 // import Cafe from './components/Cafe';
 
 const shopURL = 'http://localhost:3000/shops'
-const ratingURL = 'http://localhost:3000/ratings'
+// const ratingURL = 'http://localhost:3000/ratings'
 
 const access = process.env.REACT_APP_API_KEY
 
@@ -36,8 +36,7 @@ export default class App extends Component {
   state = {
     cafes: [],
     place: null,
-    currentUser:null,
-    ratings:[]
+    currentUser:null
   }
   // POPULATES WITH CAFES 
   componentDidMount() {
@@ -47,11 +46,11 @@ export default class App extends Component {
         this.setState({ cafes });
       })
 
-      fetch(ratingURL)
-            .then(resp => resp.json())
-            .then(ratings => {
-                this.setState({ ratings });
-            })
+      // fetch(ratingURL)
+      //       .then(resp => resp.json())
+      //       .then(ratings => {
+      //           this.setState({ ratings });
+      //       })
   }
   // updates state of 'user' to peron who is logged in
   updateUser =(userObj)=> {
@@ -68,7 +67,7 @@ export default class App extends Component {
       <div className="App">
         <Navbar currentUser={this.state.currentUser} toggleLogout={this.toggleLogout}/>
         <Switch>
-          <Route path="/cafes/:id" render={(routerProps)=> <CafeProfile {...routerProps} currentUser={this.state.currentUser} ratings={this.state.ratings}/>} />
+          <Route path="/cafes/:id" render={(routerProps)=> <CafeProfile {...routerProps} currentUser={this.state.currentUser} />} />
           <Route path="/cafes" render={(routerProps) => <CafeContainter {...routerProps} cafes={this.state.cafes} />} />
           <Route path="/login" render={(routerProps)=> <Auth {...routerProps} currentUser={this.state.currentUser} updateUser={this.updateUser}/>} />
           <Route path="/" component={Home} />
