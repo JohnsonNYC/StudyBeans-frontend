@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class Rating extends Component {
     render() {
         const { rating, cafe } = this.props
-        console.log(rating)
-        console.log(cafe)
+        
+
         return (
             <div className='rating'>
                 <div>Rating:{rating.stars} Stars</div>
