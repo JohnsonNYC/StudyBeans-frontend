@@ -14,7 +14,7 @@ class CafeProfile extends Component {
         stars: 5,
         ratings: [] // ALL ratings 
     }
-    //fetches the information for one shop as well as the ratings 
+    //fetch all shops and ratings 
     componentDidMount() {
         fetch(`${shopURL}/${this.props.match.params.id}`)
             .then(resp => resp.json())
@@ -31,8 +31,13 @@ class CafeProfile extends Component {
                 this.setState({ ratings })
             })
     }
-
-
+    // delete a rating
+    toggleDelete = (ratingObj) => {
+        const {ratings}=this.state
+        const newRatings = ratings.filter(rating => rating !==ratingObj)
+        this.setState({ ratings: newRatings  });
+        
+    }
 
     // E V E N T   L I S T E N E R S  
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
@@ -40,7 +45,7 @@ class CafeProfile extends Component {
     handleDropdown = (e) => {
         this.setState({ value: parseInt(e.target.value) })
     }
-    // clicking the reservation button
+
     handleReservation = () => {
         const { cafe, value } = this.state
         const { currentUser } = this.props
@@ -104,19 +109,6 @@ class CafeProfile extends Component {
     ////////////////////////////////
 
 
-    // cafeRatings = () =>{
-    //     let ratingsForCafe= this.state.ratings.filter(rating => ( rating.shop_id === this.state.cafe.id))
-    //     let commentsArray = ratingsForCafe.map(rating => (rating.comments))
-    //     console.log('ratingsforCafe',ratingsForCafe)
-    //     console.log('commentsArray',commentsArray)
-
-    //     this.setState({ ratingsForCafe, commentsArray  });
-    //     // DIDN"T WORK, INFINITE LOOP BECAUSE SETS STATE WHEN CALLED ON BUT IS CALLED ON WHEN SET STATE
-    // }
-
-
-
-
     renderCafe = () => {
         const { cafe, ratings } = this.state
         const { currentUser } = this.props
@@ -146,7 +138,7 @@ class CafeProfile extends Component {
                 {/* {this.cafeRatings()} */}
                 {ratings.map((rating) => {
                     if (rating.shop_id === cafe.id) {
-                        return <Rating key={rating.id} cafe={cafe} rating={rating} currentUser={currentUser} />
+                        return <Rating key={rating.id} cafe={cafe} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete}/>
                     }
                 })}
             </div>
@@ -155,8 +147,6 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
-        console.log('ratings', this.state.ratings)
-        console.log('cafe', this.state.cafe)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
