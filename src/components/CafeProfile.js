@@ -35,7 +35,11 @@ class CafeProfile extends Component {
     toggleDelete = (ratingObj) => {
         const {ratings}=this.state
         const newRatings = ratings.filter(rating => rating !==ratingObj)
-        this.setState({ ratings: newRatings  });
+        this.setState({ ratings: newRatings  })
+
+        fetch(`${ratingURL}/${ratingObj.id}`,{
+            method: 'DELETE'
+        })
         
     }
 

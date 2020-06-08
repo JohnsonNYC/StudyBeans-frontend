@@ -45,12 +45,6 @@ export default class App extends Component {
       .then(cafes => {
         this.setState({ cafes });
       })
-
-      // fetch(ratingURL)
-      //       .then(resp => resp.json())
-      //       .then(ratings => {
-      //           this.setState({ ratings });
-      //       })
   }
   // updates state of 'user' to peron who is logged in
   updateUser =(userObj)=> {
