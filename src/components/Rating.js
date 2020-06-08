@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 
 class Rating extends Component {
-    render() {
-        const { rating, cafe } = this.props
-        
 
+    
+
+    render() {
+        const { rating, cafe, currentUser, toggleDelete } = this.props
+        const renderDelete = <button onClick={() => toggleDelete(rating)}>Delete</button>
+        // console.log(currentUser.id)
         return (
             <div className='rating'>
-                <div>Rating:{rating.stars} Stars</div>
-                <div>Comments:
-                    <div>{rating.comments}</div>
-                </div> {/* THIS WILL BE AN ARRAY */}
+                <div className='stars'>Rating:{rating.stars} Stars</div>
+                <div className='comments-container'>Comments:
+                    <div className='comments'>{rating.comments}</div>
+                </div>
+                <div className='author'>by:{rating.user.name}</div>
+                {currentUser && currentUser.id === rating.user_id ? renderDelete : null}
             </div>
         );
     }
