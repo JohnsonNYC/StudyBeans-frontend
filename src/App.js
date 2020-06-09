@@ -65,6 +65,7 @@ export default class App extends Component {
     let filtered = this.state.cafes.filter(cafe => {
       return cafe.name.toLowerCase().includes(this.state.search.toLowerCase())
     })
+    console.log(this.state)
     return (
       <div className="App">
         <Navbar currentUser={this.state.currentUser} toggleLogout={this.toggleLogout}/>

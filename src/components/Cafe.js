@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../App.css'
 class Cafe extends Component {
     render() {
         const {cafe} = this.props
