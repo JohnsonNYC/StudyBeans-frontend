@@ -7,7 +7,7 @@ class Rating extends Component {
     render() {
         const { rating, cafe, currentUser, toggleDelete } = this.props
         const renderDelete = <button onClick={() => toggleDelete(rating)}>Delete</button>
-        // console.log(currentUser.id)
+        console.log(rating)
         return (
             <div className='rating'>
                 <div className='stars'>Rating:{rating.stars} Stars</div>
