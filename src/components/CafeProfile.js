@@ -32,16 +32,26 @@ class CafeProfile extends Component {
                 this.setState({ ratings })
             })
     }
-    // delete a rating
+    // D E L E T E   A   R E S E R V A T I O N   
     toggleDelete = (ratingObj) => {
         const { ratings } = this.state
         const newRatings = ratings.filter(rating => rating !== ratingObj)
         this.setState({ ratings: newRatings })
-
         fetch(`${ratingURL}/${ratingObj.id}`, {
             method: 'DELETE'
         })
+    }
+    // D E L E T E   A   R E S E R V A T I O  N 
+    deleteRes = () => {
 
+        fetch(`${reservationURL}/${this.state.currentReservation.id}`, {
+            method: 'DELETE'
+        })
+
+        this.setState({
+            seats: this.state.seats + this.state.currentReservation.seats,
+            currentReservation: null
+        })
     }
 
     // E V E N T   L I S T E N E R S  
@@ -116,7 +126,7 @@ class CafeProfile extends Component {
 
     reservationInfo = () => {
         const { currentReservation } = this.state
-        let time = currentReservation.time.slice(0,8) // Original Time
+        let time = currentReservation.time.slice(0, 8) // Original Time
         let timeToadd = "00:10:00";  // Time to be added in min
         let timeToAddArr = timeToadd.split(":");
         let ms = (60 * 60 * parseInt(timeToAddArr[0]) + 60 * (parseInt(timeToAddArr[1]))) * 1000;
@@ -131,6 +141,7 @@ class CafeProfile extends Component {
             </div>
         )
     }
+
 
 
     renderCafe = () => {
@@ -156,7 +167,7 @@ class CafeProfile extends Component {
                 {/* R E S E R V A T I O N  I N F O  */}
 
                 {this.state.currentReservation == null ? <button onClick={this.handleReservation}>Reserve</button> : this.reservationInfo()}
-
+                {this.state.currentReservation == null ? null : <button onClick={this.deleteRes}> Delete Reservation </button>}
                 {/* C O M M E N T   F O R M  */}
                 <form onSubmit={this.handleSubmit}>
                     <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
@@ -175,7 +186,7 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
-        console.log(this.state.currentReservation)
+        console.log('all',this.state)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
