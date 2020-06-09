@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Rating from './Rating'
+import '../App.css'
+import {FaStar} from 'react-icons/fa'
 const shopURL = 'http://localhost:3000/shops'
 const reservationURL = 'http://localhost:3000/reservations'
 const ratingURL = 'http://localhost:3000/ratings'
@@ -7,14 +9,16 @@ const ratingURL = 'http://localhost:3000/ratings'
 
 class CafeProfile extends Component {
     state = {
-        cafe: null,
-        seats: null,
-        comment: '',
+        cafe: null, // cafe data
+        seats: null, // seats picked for reservatoin
+        comment: '', // controlled form 
         value: 1, // controlled form for dropdown
-        stars: 5,
+        stars: 0, // hard corded star for POST reservation 
         ratings: [],
         currentReservation: null // ALL ratings 
     }
+
+
     //fetch all shops and ratings 
     componentDidMount() {
         fetch(`${shopURL}/${this.props.match.params.id}`)
@@ -32,7 +36,7 @@ class CafeProfile extends Component {
                 this.setState({ ratings })
             })
     }
-    // D E L E T E   A   R E S E R V A T I O N   
+    // D E L E T E   A   R A T I N G   
     toggleDelete = (ratingObj) => {
         const { ratings } = this.state
         const newRatings = ratings.filter(rating => rating !== ratingObj)
@@ -142,7 +146,9 @@ class CafeProfile extends Component {
         )
     }
 
-
+    toggleStar = (ratingValue) =>{
+        this.setState({ stars: ratingValue });
+    }
 
     renderCafe = () => {
         const { cafe, ratings } = this.state
@@ -168,7 +174,22 @@ class CafeProfile extends Component {
 
                 {this.state.currentReservation == null ? <button onClick={this.handleReservation}>Reserve</button> : this.reservationInfo()}
                 {this.state.currentReservation == null ? null : <button onClick={this.deleteRes}> Delete Reservation </button>}
-                {/* C O M M E N T   F O R M  */}
+                {/* R A T I N G  F O R M  */}
+                <br></br>
+                <span>Rate this cafe!</span>
+
+                <div>
+                    {[...Array(5)].map((star, index)=> {
+                        const ratingValue = index + 1;
+                        return (
+                        <label>
+                            <input type='radio' name='rating' value={ratingValue} onClick={()=>this.toggleStar(ratingValue)}/>
+                            <FaStar className='star' color={ratingValue <= this.state.stars ? "#ffc107" : "#e4e5e9"} size={20}/>
+                        </label>
+                        )
+
+                    })}
+                </div>
                 <form onSubmit={this.handleSubmit}>
                     <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
                     <input type='submit' value='Submit' />
@@ -186,7 +207,7 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
-        console.log('all',this.state)
+        console.log('all', this.state)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}

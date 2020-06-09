@@ -4,18 +4,12 @@ import Searchbar from './Searchbar'
 
 class CafeContainer extends Component {
 
-    state ={
-        ratings:[]
-    }
-
-    componentDidMount() {
-        
-    }
     render() {
         const {cafes}=this.props
+        console.log('search',this.props.search)
         return (
             <div className='cafe-container'>
-                <Searchbar />
+                <Searchbar cafes = {cafes} searchChange={this.props.searchChange} search={this.props.search}/>
                 A L L   C A F E S
                 {cafes.map((cafe)=>
                 <Cafe key={cafe.id} cafe={cafe} {...this.props.history}/>
