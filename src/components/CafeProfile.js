@@ -9,13 +9,14 @@ const ratingURL = 'http://localhost:3000/ratings'
 
 class CafeProfile extends Component {
     state = {
-        cafe: null, // cafe data
+        cafe: null, // cafe data cdm
         seats: null, // seats picked for reservatoin
         comment: '', // controlled form 
         value: 1, // controlled form for dropdown
         stars: 0, // hard corded star for POST reservation 
-        ratings: [],
-        currentReservation: null // ALL ratings 
+        ratings: [], // ratings data cdm
+        currentReservation: null, // ALL ratings 
+        currentRating: null
     }
 
 
@@ -123,7 +124,9 @@ class CafeProfile extends Component {
                     stars: stars,
                     comments: comment
                 })
-            }).then(resp => resp.json()).then(res => this.setState({ ratings: [...this.state.ratings, res] })) // SETSTATE HERE?
+            }).then(resp => resp.json()).then(res => this.setState({ 
+                ratings: [...this.state.ratings, res] 
+            })) 
         } else { alert('please login or signup') }
     }
     ////////////////////////////////
@@ -189,6 +192,7 @@ class CafeProfile extends Component {
                         )
 
                     })}
+                    {/* P O S T   A   R A T I N G  */}
                 </div>
                 <form onSubmit={this.handleSubmit}>
                     <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
@@ -207,7 +211,6 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
-        console.log('all', this.state)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}

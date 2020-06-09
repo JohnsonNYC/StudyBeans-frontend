@@ -45,8 +45,9 @@ input[type='radio']{
   cursor: pointer;
   transition: color 200ms
 }
-/* .checked {
-  color: brown;
-} */
+
+.cafe-card {
+  border:"1px solid purple";
+}
 
 
