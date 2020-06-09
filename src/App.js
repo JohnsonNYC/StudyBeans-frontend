@@ -36,8 +36,14 @@ export default class App extends Component {
   state = {
     cafes: [],
     place: null,
-    currentUser:null
+    currentUser:null,
+    search: "",
+    filtered: null
   }
+  //Search  Bar Logic
+  searchChange= (e) =>{
+    this.setState({ [e.target.name]: e.target.value });
+}
   // POPULATES WITH CAFES 
   componentDidMount() {
     fetch(shopURL)
@@ -56,20 +62,22 @@ export default class App extends Component {
   }
 
   render() {
-    // console.log(this.state)
+    let filtered = this.state.cafes.filter(cafe => {
+      return cafe.name.toLowerCase().includes(this.state.search.toLowerCase())
+    })
     return (
       <div className="App">
         <Navbar currentUser={this.state.currentUser} toggleLogout={this.toggleLogout}/>
         <Switch>
           <Route path="/cafes/:id" render={(routerProps)=> <CafeProfile {...routerProps} currentUser={this.state.currentUser} />} />
-          <Route path="/cafes" render={(routerProps) => <CafeContainter {...routerProps} cafes={this.state.cafes} />} />
+          <Route path="/cafes" render={(routerProps) => <CafeContainter {...routerProps} cafes={this.state.search !==""? filtered: this.state.cafes} searchChange={this.searchChange} search={this.state.search}/>} />
           <Route path="/login" render={(routerProps)=> <Auth {...routerProps} currentUser={this.state.currentUser} updateUser={this.updateUser}/>} />
           <Route path="/" component={Home} />
         </Switch>
   
         <div style={{ width: '100vw', height: '50vh' }}>
           {/* <WrappedMap
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${null}`}
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${access}`}
           loadingElement={<div style={{ height: '100%' }} />}
           containerElement={<div style={{ height: '100%' }} />}
           mapElement={<div style={{ height: '100%' }} />}

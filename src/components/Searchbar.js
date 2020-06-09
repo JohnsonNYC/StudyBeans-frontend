@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
 class Searchbar extends Component {
-    // state = {}
+
     render() {
+        const {search, searchChange} = this.props
         return (
-            <div>
-                Search Bar Component
+            <div className='search'>
+                <input value={search} name='search' placeholder='search by cafe name' onChange={searchChange}/>
             </div>
         );
     }
