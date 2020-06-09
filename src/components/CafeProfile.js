@@ -10,9 +10,10 @@ class CafeProfile extends Component {
         cafe: null,
         seats: null,
         comment: '',
-        value: 0, // controlled form for dropdown
+        value: 1, // controlled form for dropdown
         stars: 5,
-        ratings: [] // ALL ratings 
+        ratings: [],
+        currentReservation: null // ALL ratings 
     }
     //fetch all shops and ratings 
     componentDidMount() {
@@ -33,14 +34,14 @@ class CafeProfile extends Component {
     }
     // delete a rating
     toggleDelete = (ratingObj) => {
-        const {ratings}=this.state
-        const newRatings = ratings.filter(rating => rating !==ratingObj)
-        this.setState({ ratings: newRatings  })
+        const { ratings } = this.state
+        const newRatings = ratings.filter(rating => rating !== ratingObj)
+        this.setState({ ratings: newRatings })
 
-        fetch(`${ratingURL}/${ratingObj.id}`,{
+        fetch(`${ratingURL}/${ratingObj.id}`, {
             method: 'DELETE'
         })
-        
+
     }
 
     // E V E N T   L I S T E N E R S  
@@ -65,12 +66,13 @@ class CafeProfile extends Component {
                     user_id: currentUser.id,
                     shop_id: cafe.id,
                     seats: value,
-                    time: new Date().toLocaleTimeString()
+                    time: new Date().toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })
                 })
             }
+
             fetch(reservationURL, configObj)
                 .then(resp => resp.json())
-                .then(res => console.log(res))
+                .then(res => this.setState({ currentReservation: res }))
 
             fetch(`http://localhost:3000/shops/${cafe.id}`, {
                 method: 'PATCH',
@@ -108,9 +110,27 @@ class CafeProfile extends Component {
                     comments: comment
                 })
             }).then(resp => resp.json()).then(res => this.setState({ ratings: [...this.state.ratings, res] })) // SETSTATE HERE?
-        }else{ alert('please login or signup')}
+        } else { alert('please login or signup') }
     }
     ////////////////////////////////
+
+    reservationInfo = () => {
+        const { currentReservation } = this.state
+        let time = currentReservation.time.slice(0,8) // Original Time
+        let timeToadd = "00:10:00";  // Time to be added in min
+        let timeToAddArr = timeToadd.split(":");
+        let ms = (60 * 60 * parseInt(timeToAddArr[0]) + 60 * (parseInt(timeToAddArr[1]))) * 1000;
+        let newTime = new Date('1970-01-01T' + time).getTime() + ms
+        let finalTime = `${new Date(newTime).toLocaleString('en-GB').slice(12, 17)} ${currentReservation.time.slice(9)}`
+
+        return (
+            <div className='reservation'>
+                <div>Thank you for reserving {currentReservation.seats} {currentReservation.seats > 1 ? `seats` : `seat`} with us!</div>
+                <div>Please be here by {finalTime}</div>
+                <div> put countdown in here</div>
+            </div>
+        )
+    }
 
 
     renderCafe = () => {
@@ -126,13 +146,17 @@ class CafeProfile extends Component {
                 <div>{cafe.address}</div>
                 <div>Available Seats: {this.state.seats}</div>
 
-                <select value={this.state.value} onChange={this.handleDropdown}>
-                    {seats.map(option => {
-                        return option
-                    })}
-                </select>
-                {/* R E S E R V A T I O N   B U T T O N   */}
-                <button onClick={this.handleReservation}>Reserve</button>
+                {this.state.currentReservation !== null ? null :
+                    <select value={this.state.value} onChange={this.handleDropdown}>
+                        {seats.map(option => {
+                            return option
+                        })}
+                    </select>
+                }
+                {/* R E S E R V A T I O N  I N F O  */}
+
+                {this.state.currentReservation == null ? <button onClick={this.handleReservation}>Reserve</button> : this.reservationInfo()}
+
                 {/* C O M M E N T   F O R M  */}
                 <form onSubmit={this.handleSubmit}>
                     <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
@@ -142,7 +166,7 @@ class CafeProfile extends Component {
                 {/* {this.cafeRatings()} */}
                 {ratings.map((rating) => {
                     if (rating.shop_id === cafe.id) {
-                        return <Rating key={rating.id} cafe={cafe} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete}/>
+                        return <Rating key={rating.id} cafe={cafe} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete} />
                     }
                 })}
             </div>
@@ -151,6 +175,7 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
+        console.log(this.state.currentReservation)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
