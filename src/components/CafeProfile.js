@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import Rating from './Rating'
 import '../App.css'
-import {FaStar} from 'react-icons/fa'
+import { FaStar } from 'react-icons/fa'
+import { GoogleMap, withScriptjs, withGoogleMap, Marker } from 'react-google-maps'
+
+
+
 const shopURL = 'http://localhost:3000/shops'
 const reservationURL = 'http://localhost:3000/reservations'
 const ratingURL = 'http://localhost:3000/ratings'
 
+
+function Map() {
+    return (
+        <GoogleMap
+            defaultZoom={10}
+            defaultCenter={{ lat: 40.719570, lng: -74.008392 }}>
+            <Marker  /*position={{ lat: cafe.coordinates[0], lng: cafe.coordinates[1] }} */ />
+        </GoogleMap>
+    )
+}
+const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 class CafeProfile extends Component {
     state = {
@@ -16,9 +31,9 @@ class CafeProfile extends Component {
         stars: 0, // hard corded star for POST reservation 
         ratings: [], // ratings data cdm
         currentReservation: null, // ALL ratings 
-        currentRating: null
+        currentRating: null,
+        hover: null
     }
-
 
     //fetch all shops and ratings 
     componentDidMount() {
@@ -34,7 +49,7 @@ class CafeProfile extends Component {
         fetch(ratingURL)
             .then(resp => resp.json())
             .then(ratings => {
-                this.setState({ ratings })
+                this.setState({ ratings: ratings.reverse() })
             })
     }
     // D E L E T E   A   R A T I N G   
@@ -124,9 +139,9 @@ class CafeProfile extends Component {
                     stars: stars,
                     comments: comment
                 })
-            }).then(resp => resp.json()).then(res => this.setState({ 
-                ratings: [...this.state.ratings, res] 
-            })) 
+            }).then(resp => resp.json()).then(res => this.setState({
+                ratings: [res, ...this.state.ratings]
+            }))
         } else { alert('please login or signup') }
     }
     ////////////////////////////////
@@ -149,10 +164,13 @@ class CafeProfile extends Component {
         )
     }
 
-    toggleStar = (ratingValue) =>{
+    toggleStar = (ratingValue) => {
         this.setState({ stars: ratingValue });
     }
 
+    setHover = (value) => {
+        this.setState({ hover: value });
+    }
     renderCafe = () => {
         const { cafe, ratings } = this.state
         const { currentUser } = this.props
@@ -164,6 +182,16 @@ class CafeProfile extends Component {
             <div className='cafe-profile'>
                 <div>{cafe.name}</div>
                 <div>{cafe.address}</div>
+
+                <div style={{ width: '100vw', height: '50vh' }}>
+                    <WrappedMap
+                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${null}`}
+                        loadingElement={<div style={{ height: '100%' }} />}
+                        containerElement={<div style={{ height: '100%' }} />}
+                        mapElement={<div style={{ height: '100%' }} />}
+                    />
+                </div>
+
                 <div>Available Seats: {this.state.seats}</div>
 
                 {this.state.currentReservation !== null ? null :
@@ -182,13 +210,13 @@ class CafeProfile extends Component {
                 <span>Rate this cafe!</span>
 
                 <div>
-                    {[...Array(5)].map((star, index)=> {
+                    {[...Array(5)].map((star, index) => {
                         const ratingValue = index + 1;
                         return (
-                        <label>
-                            <input type='radio' name='rating' value={ratingValue} onClick={()=>this.toggleStar(ratingValue)}/>
-                            <FaStar className='star' color={ratingValue <= this.state.stars ? "#ffc107" : "#e4e5e9"} size={20}/>
-                        </label>
+                            <label>
+                                <input type='radio' name='rating' value={ratingValue} onClick={() => this.toggleStar(ratingValue)} />
+                                <FaStar className='star' color={ratingValue <= (this.state.hover || this.state.stars) ? "#ffc107" : "#e4e5e9"} size={20} onMouseEnter={() => this.setHover(ratingValue)} onMouseLeave={() => this.setHover(null)} />
+                            </label>
                         )
 
                     })}
@@ -211,6 +239,7 @@ class CafeProfile extends Component {
 
     render() {
         const { cafe } = this.state
+        console.log(this.state.ratings)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
