@@ -5,7 +5,7 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <input name='usernam'/>
+                <input name='username'/>
             </div>
         );
     }
