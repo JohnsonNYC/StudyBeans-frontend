@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import Rating from './Rating'
 import '../App.css'
 import { FaStar } from 'react-icons/fa'
-import { GoogleMap, withScriptjs, withGoogleMap, Marker } from 'react-google-maps'
-
+import MyGoogleMap from './Map'
+import Button from '@material-ui/core/Button'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import InputBase from '@material-ui/core/InputBase'
+import { withStyles } from '@material-ui/core/styles';
 
 
 const shopURL = 'http://localhost:3000/shops'
@@ -11,16 +14,42 @@ const reservationURL = 'http://localhost:3000/reservations'
 const ratingURL = 'http://localhost:3000/ratings'
 
 
-function Map() {
-    return (
-        <GoogleMap
-            defaultZoom={10}
-            defaultCenter={{ lat: 40.719570, lng: -74.008392 }}>
-            <Marker  /*position={{ lat: cafe.coordinates[0], lng: cafe.coordinates[1] }} */ />
-        </GoogleMap>
-    )
-}
-const WrappedMap = withScriptjs(withGoogleMap(Map))
+const BootstrapInput = withStyles((theme) => ({
+    root: {
+        'label + &': {
+            marginTop: theme.spacing(3),
+        },
+    },
+    input: {
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: theme.palette.background.paper,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        // Use the system font instead of the default Roboto font.
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        },
+    },
+}))(InputBase);
+
+
 
 class CafeProfile extends Component {
     state = {
@@ -139,12 +168,15 @@ class CafeProfile extends Component {
                     stars: stars,
                     comments: comment
                 })
-            }).then(resp => resp.json()).then(res => this.setState({
-                ratings: [res, ...this.state.ratings]
-            }))
+            }).then(resp => resp.json()).then(res => {
+                this.props.currentRating(res)
+                this.setState({
+                    ratings: [res, ...this.state.ratings],
+                    currentRating: res
+                })
+            })
         } else { alert('please login or signup') }
     }
-    ////////////////////////////////
 
     reservationInfo = () => {
         const { currentReservation } = this.state
@@ -171,9 +203,12 @@ class CafeProfile extends Component {
     setHover = (value) => {
         this.setState({ hover: value });
     }
+
+
     renderCafe = () => {
         const { cafe, ratings } = this.state
         const { currentUser } = this.props
+
         let seats = []
         for (let i = 0; i < cafe.seats; i++) {
             seats.push(<option value={i + 1}>{i + 1}</option>)
@@ -182,29 +217,23 @@ class CafeProfile extends Component {
             <div className='cafe-profile'>
                 <div>{cafe.name}</div>
                 <div>{cafe.address}</div>
-
-                <div style={{ width: '100vw', height: '50vh' }}>
-                    <WrappedMap
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${null}`}
-                        loadingElement={<div style={{ height: '100%' }} />}
-                        containerElement={<div style={{ height: '100%' }} />}
-                        mapElement={<div style={{ height: '100%' }} />}
-                    />
-                </div>
+                {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
+                <MyGoogleMap cafe={cafe} />
+                {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
 
                 <div>Available Seats: {this.state.seats}</div>
 
                 {this.state.currentReservation !== null ? null :
-                    <select value={this.state.value} onChange={this.handleDropdown}>
+                    <NativeSelect id="demo-customized-select-native" value={this.state.value} onChange={this.handleDropdown} input={<BootstrapInput/>}>
                         {seats.map(option => {
                             return option
                         })}
-                    </select>
+                    </NativeSelect>
                 }
                 {/* R E S E R V A T I O N  I N F O  */}
 
-                {this.state.currentReservation == null ? <button onClick={this.handleReservation}>Reserve</button> : this.reservationInfo()}
-                {this.state.currentReservation == null ? null : <button onClick={this.deleteRes}> Delete Reservation </button>}
+                {this.state.currentReservation == null ? <Button variant="contained" color="primary" onClick={this.handleReservation}>Reserve</Button> : this.reservationInfo()}
+                {this.state.currentReservation == null ? null : <Button onClick={this.deleteRes}> Delete Reservation </Button>}
                 {/* R A T I N G  F O R M  */}
                 <br></br>
                 <span>Rate this cafe!</span>
@@ -227,7 +256,6 @@ class CafeProfile extends Component {
                     <input type='submit' value='Submit' />
                 </form>
                 {/* L I S T   O F   C O M M E N T S  */}
-                {/* {this.cafeRatings()} */}
                 {ratings.map((rating) => {
                     if (rating.shop_id === cafe.id) {
                         return <Rating key={rating.id} cafe={cafe} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete} />
@@ -238,8 +266,8 @@ class CafeProfile extends Component {
     }
 
     render() {
-        const { cafe } = this.state
-        console.log(this.state.ratings)
+        const { cafe, currentRating } = this.state
+        // console.log(currentRating)
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}

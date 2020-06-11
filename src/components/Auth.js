@@ -1,6 +1,70 @@
 import React, { Component } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
 const userURL = 'http://localhost:3000/users'
+
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="http://localhost:3000/">
+                Study Beans
+        </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        height: '100vh',
+    },
+    image: {
+        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor:
+            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    },
+    paper: {
+        margin: theme.spacing(8, 4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
+
+
+
 class Auth extends Component {
+    
     state = {
         isNewUser: false,
         name: '',
@@ -24,10 +88,6 @@ class Auth extends Component {
     // When Submit button is toggled
     handleSubmit = e => {
         const { isNewUser, password, confirmation, username, name, email } = this.state;
-        // isNewUser // if new user is true 
-        //     ? password === confirmation // if password and confirmation match
-        //         ? alert('created new account!') : alert('try again!') // alert 'created new account' else 'try again'
-        //     : alert(`welcome back, ${username}`) // if new user is false
 
         let currentUser
         if (isNewUser === true && password === confirmation) {
@@ -57,25 +117,117 @@ class Auth extends Component {
     }
     // LOGIN PAGE
     renderLogin = () => {
-        const { username, password } = this.state;
+        const { username, password } = this.state
         return (
-            <>
-                <input name="username" placeholder="Username" value={username} onChange={this.handleChange} />
-                <input name="password" placeholder="Password" type="password" value={password} onChange={this.handleChange} />
-            </>
+            <Grid container component="main" className={'height'}>
+                <CssBaseline />
+                <Grid item xs={false} sm={4} md={7} className={'image'} />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <div className='avatar'>
+                        <Avatar className='avatar'>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        <form>
+                            <TextField variant="outlined" margin="normal" required fullWidth name="username" id="username" label="Username" name="username"  value={username} onChange={this.handleChange} autoFocus/>
+                            <TextField variant="outlined" margin="normal" required fullWidth name="password" id="password" label="Password" name="password"  type="password" value={password} onChange={this.handleChange} autoFocus/>
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button //Remember to set state and use function to control this 
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className='submit'
+                                type="submit" 
+                                onClick={this.handleSubmit}
+                            >
+                                Sign In
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link href="#" variant="body2">
+                                        Forgot password?
+                                    </Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="#" variant="body2" onClick={this.toggleNewUser}>
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                            <Box mt={5}>
+                                <Copyright />
+                            </Box>
+                        </form>
+                    </div>
+                </Grid>
+            </Grid>
         )
     }
     // SIGN UP PAGE
     renderSignup = () => {
         const { username, password, name, confirmation, email } = this.state;
         return (
-            <>
-                <input name="name" placeholder="Name" value={name} onChange={this.handleChange} />
-                <input name="email" placeholder="Email" value={email} onChange={this.handleChange} />
-                <input name="username" placeholder="Username" value={username} onChange={this.handleChange} />
-                <input name="password" placeholder="Password" type="password" value={password} onChange={this.handleChange} />
-                <input name="confirmation" placeholder="Confirm Password" type="password" value={confirmation} onChange={this.handleChange} />
-            </>
+            // <>
+            //     <input name="name" placeholder="Name" value={name} onChange={this.handleChange} />
+            //     <input name="email" placeholder="Email" value={email} onChange={this.handleChange} />
+            //     <input name="username" placeholder="Username" value={username} onChange={this.handleChange} />
+            //     <input name="password" placeholder="Password" type="password" value={password} onChange={this.handleChange} />
+            //     <input name="confirmation" placeholder="Confirm Password" type="password" value={confirmation} onChange={this.handleChange} />
+            // </>
+            <Grid container component="main" className={'height'}>
+                <CssBaseline />
+                <Grid item xs={false} sm={4} md={7} className={'image'} />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <div className='avatar'>
+                        <Avatar className='avatar'>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Create Account
+                        </Typography>
+                        <form>
+                            <TextField variant="outlined" margin="normal" required fullWidth id="name"  label="Name" name="name"  value={name} onChange={this.handleChange} autoFocus/>
+                            <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email" name="email"  value={email} onChange={this.handleChange} autoFocus/>
+                            <TextField variant="outlined" margin="normal" required fullWidth id="username" label="Username" name="username"  value={username} onChange={this.handleChange} autoFocus/>
+                            <TextField variant="outlined" margin="normal" required fullWidth id="password" label="Password" name="password"  type="password" value={password} onChange={this.handleChange} autoFocus/>
+                            <TextField variant="outlined" margin="normal" required fullWidth id="confirm-password" label="Confirm-password" name="confirmation"  type="password" value={confirmation} onChange={this.handleChange} autoFocus/>
+                            
+                            <Button //Remember to set state and use function to control this 
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className='submit'
+                                type="submit" 
+                                onClick={this.handleSubmit}
+                            >
+                                Create Account
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link href="#" variant="body2">
+                                        Forgot password?
+                                    </Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="#" variant="body2" onClick={this.toggleNewUser}>
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                            <Box mt={5}>
+                                <Copyright />
+                            </Box>
+                        </form>
+                    </div>
+                </Grid>
+            </Grid>
         )
     }
     render() {
@@ -84,8 +236,8 @@ class Auth extends Component {
             <div>
                 <h3>{isNewUser ? 'Sign Up' : 'Login'}</h3>
                 {isNewUser ? this.renderSignup() : this.renderLogin()}
-                <button type="submit" onClick={this.handleSubmit}>Submit</button>
-                <div onClick={this.toggleNewUser}>{isNewUser ? "Login" : "New Member? Sign up!"}</div>
+                {/* <button type="submit" onClick={this.handleSubmit}>Submit</button> */}
+                {/* <div onClick={this.toggleNewUser}>{isNewUser ? "Login" : "New Member? Sign up!"}</div> */}
             </div>
         );
     }
