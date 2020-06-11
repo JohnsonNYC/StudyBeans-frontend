@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../App.css'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -27,41 +28,6 @@ function Copyright() {
         </Typography>
     );
 }
-
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        height: '100vh',
-    },
-    image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
-        backgroundRepeat: 'no-repeat',
-        backgroundColor:
-            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-    },
-    paper: {
-        margin: theme.spacing(8, 4),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
-
-
-
 
 class Auth extends Component {
     state = {
@@ -117,21 +83,22 @@ class Auth extends Component {
     // LOGIN PAGE
     renderLogin = () => {
         const { username, password } = this.state
+    
         return (
-            <Grid container component="main" className={'height'}>
+            <Grid container component="main" className='rootTwo' style={{ height: '100vh' }}>
                 <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} className={'image'} />
+                <Grid item xs={false} sm={4} md={7} className='image' style={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundRepeat: 'no-repeat', backgroundColor: '#A9A9A9', backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <div className='avatar'>
-                        <Avatar className='avatar'>
+                    <div className='paper' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',margin: 30  }} >
+                        <Avatar className='avatar' style={{margin: 8, backgroundColor:'#CD5C5C',border:"1px solid purple"}}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <form>
-                            <TextField variant="outlined" margin="normal" required fullWidth name="username" id="username" label="Username" name="username"  value={username} onChange={this.handleChange} autoFocus/>
-                            <TextField variant="outlined" margin="normal" required fullWidth name="password" id="password" label="Password" name="password"  type="password" value={password} onChange={this.handleChange} autoFocus/>
+                        <form className='form' style={{width:'100%',marginTop:100}}>
+                            <TextField variant="outlined" margin="normal" required fullWidth name="username" id="username" label="Username" name="username" value={username} onChange={this.handleChange} autoFocus />
+                            <TextField variant="outlined" margin="normal" required fullWidth name="password" id="password" label="Password" name="password" type="password" value={password} onChange={this.handleChange} autoFocus />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"
@@ -142,8 +109,9 @@ class Auth extends Component {
                                 variant="contained"
                                 color="primary"
                                 className='submit'
-                                type="submit" 
+                                type="submit"
                                 onClick={this.handleSubmit}
+                                style={{margin: 3 }}
                             >
                                 Sign In
                             </Button>
@@ -179,32 +147,33 @@ class Auth extends Component {
             //     <input name="password" placeholder="Password" type="password" value={password} onChange={this.handleChange} />
             //     <input name="confirmation" placeholder="Confirm Password" type="password" value={confirmation} onChange={this.handleChange} />
             // </>
-            <Grid container component="main" className={'height'}>
+            <Grid container component="main" className={'height'} style={{ height: '100vh' }}>
                 <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} className={'image'} />
+                <Grid item xs={false} sm={4} md={7} className={'image'} style={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundRepeat: 'no-repeat', backgroundColor: '#A9A9A9', backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <div className='avatar'>
-                        <Avatar className='avatar'>
+                    <div className='paper' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',margin: 30  }}>
+                        <Avatar className='avatar' style={{margin: 8, backgroundColor:'#CD5C5C',border:"1px solid purple"}}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Create Account
                         </Typography>
-                        <form>
-                            <TextField variant="outlined" margin="normal" required fullWidth id="name"  label="Name" name="name"  value={name} onChange={this.handleChange} autoFocus/>
-                            <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email" name="email"  value={email} onChange={this.handleChange} autoFocus/>
-                            <TextField variant="outlined" margin="normal" required fullWidth id="username" label="Username" name="username"  value={username} onChange={this.handleChange} autoFocus/>
-                            <TextField variant="outlined" margin="normal" required fullWidth id="password" label="Password" name="password"  type="password" value={password} onChange={this.handleChange} autoFocus/>
-                            <TextField variant="outlined" margin="normal" required fullWidth id="confirm-password" label="Confirm-password" name="confirmation"  type="password" value={confirmation} onChange={this.handleChange} autoFocus/>
-                            
+                        <form style={{width:'100%',marginTop:100}}>
+                            <TextField variant="outlined" margin="normal" required fullWidth id="name" label="Name" name="name" value={name} onChange={this.handleChange} autoFocus />
+                            <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email" name="email" value={email} onChange={this.handleChange} autoFocus />
+                            <TextField variant="outlined" margin="normal" required fullWidth id="username" label="Username" name="username" value={username} onChange={this.handleChange} autoFocus />
+                            <TextField variant="outlined" margin="normal" required fullWidth id="password" label="Password" name="password" type="password" value={password} onChange={this.handleChange} autoFocus />
+                            <TextField variant="outlined" margin="normal" required fullWidth id="confirm-password" label="Confirm-password" name="confirmation" type="password" value={confirmation} onChange={this.handleChange} autoFocus />
+
                             <Button //Remember to set state and use function to control this 
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
                                 className='submit'
-                                type="submit" 
+                                type="submit"
                                 onClick={this.handleSubmit}
+                                style={{margin: 3 }}
                             >
                                 Create Account
                             </Button>
@@ -216,7 +185,7 @@ class Auth extends Component {
                                 </Grid>
                                 <Grid item>
                                     <Link href="#" variant="body2" onClick={this.toggleNewUser}>
-                                        {"Don't have an account? Sign Up"}
+                                        {"Already have an account? Sign in"}
                                     </Link>
                                 </Grid>
                             </Grid>
@@ -233,7 +202,7 @@ class Auth extends Component {
         const { isNewUser } = this.state
         return (
             <div>
-                <h3>{isNewUser ? 'Sign Up' : 'Login'}</h3>
+                {/* <h3>{isNewUser ? 'Sign Up' : 'Login'}</h3> */}
                 {isNewUser ? this.renderSignup() : this.renderLogin()}
                 {/* <button type="submit" onClick={this.handleSubmit}>Submit</button> */}
                 {/* <div onClick={this.toggleNewUser}>{isNewUser ? "Login" : "New Member? Sign up!"}</div> */}
