@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 class Auth extends Component {
-    
     state = {
         isNewUser: false,
         name: '',
