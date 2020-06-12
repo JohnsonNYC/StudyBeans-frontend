@@ -52,7 +52,7 @@ export default function Cafe(props) {
                 title={cafe.name}
             />
             <CardContent className={classes.cardContent}>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography gutterBottom variant="h6" component="h2">
                     {cafe.name}
                 </Typography>
                 <Typography>
