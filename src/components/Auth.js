@@ -202,10 +202,7 @@ class Auth extends Component {
         const { isNewUser } = this.state
         return (
             <div>
-                {/* <h3>{isNewUser ? 'Sign Up' : 'Login'}</h3> */}
                 {isNewUser ? this.renderSignup() : this.renderLogin()}
-                {/* <button type="submit" onClick={this.handleSubmit}>Submit</button> */}
-                {/* <div onClick={this.toggleNewUser}>{isNewUser ? "Login" : "New Member? Sign up!"}</div> */}
             </div>
         );
     }
