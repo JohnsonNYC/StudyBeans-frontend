@@ -266,8 +266,7 @@ class CafeProfile extends Component {
     }
 
     render() {
-        const { cafe, currentRating } = this.state
-        // console.log(currentRating)
+        const { cafe } = this.state 
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}

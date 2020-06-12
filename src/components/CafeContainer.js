@@ -52,7 +52,6 @@ export default function CafeContainer(props) {
 
     return (
         <React.Fragment>
-            {/* <Searchbar cafes={cafes} searchChange={searchChange} search={search} /> */}
             <CssBaseline />
             <AppBar position="relative">
                 <Searchbar cafes={cafes} searchChange={searchChange} search={search} />
