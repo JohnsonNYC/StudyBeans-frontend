@@ -19,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     heroContent: {
-        backgroundColor: theme.palette.background.paper,
+        // backgroundColor: theme.palette.background.paper,
+        backgroundImage: 'url("https://images.wallpaperscraft.com/image/cup_black_white_135256_2560x1440.jpg")',
+        backgroundSize: "100% auto",
+        backgroundRepeat:"no-repeat",
         padding: theme.spacing(8, 0, 6),
     },
     heroButtons: {
@@ -49,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CafeContainer(props) {
     const classes = useStyles()
     const { cafes, search, searchChange } = props
+    console.log(props)
     return (
         <React.Fragment>
             <CssBaseline />
@@ -56,15 +60,13 @@ export default function CafeContainer(props) {
                 <Searchbar cafes={cafes} searchChange={searchChange} search={search} />
             </AppBar>
             <main>
-                <div className={classes.heroContent}>
+                <div className={classes.heroContent} >
                     <Container maxWidth="sm">
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                            Album layout
+                            Study Beans Partners
                         </Typography>
-                        <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                            Something short and leading about the collection below—its contents, the creator, etc.
-                            Make it short and sweet, but not too short so folks don't simply skip over it
-                            entirely.
+                        <Typography variant="h5" align="center" style={{color:'#8B4513'}} paragraph>
+                            Welcome to Study Beans. A place for you to find a cafe to do your work. Check out the cafes below and reserve your seat when you find a cafe you fancy. Cheers!
                         </Typography>
                     </Container>
                 </div>

@@ -7,6 +7,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import WifiIcon from '@material-ui/icons/Wifi';
+import PhoneIcon from '@material-ui/icons/Phone';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +50,7 @@ export default function Cafe(props) {
         <div className="cafe-card" /*style={{ border: "1px solid purple" }}*/ >
             <CardMedia
                 className={classes.cardMedia}
-                image="https://source.unsplash.com/random"
+                image={cafe.img}
                 title={cafe.name}
             />
             <CardContent className={classes.cardContent}>
@@ -56,7 +58,8 @@ export default function Cafe(props) {
                     {cafe.name}
                 </Typography>
                 <Typography>
-                    Insert cafe bio in here 
+                    <PhoneIcon />
+                    <WifiIcon />
                 </Typography>
             </CardContent>
             <CardActions>
