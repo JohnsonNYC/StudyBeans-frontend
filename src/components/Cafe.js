@@ -45,7 +45,7 @@ export default function Cafe(props) {
     const classes = useStyles()
     const { cafe } = props
     return (
-        <div className="cafe-card" style={{ border: "1px solid purple" }} >
+        <div className="cafe-card" /*style={{ border: "1px solid purple" }}*/ >
             <CardMedia
                 className={classes.cardMedia}
                 image="https://source.unsplash.com/random"
@@ -65,5 +65,5 @@ export default function Cafe(props) {
                 </Button>
             </CardActions>
         </div>
-    );
+    )
 }

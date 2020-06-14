@@ -172,7 +172,9 @@ class CafeProfile extends Component {
                 this.props.currentRating(res)
                 this.setState({
                     ratings: [res, ...this.state.ratings],
-                    currentRating: res
+                    currentRating: res,
+                    comment: '',
+                    stars: 0
                 })
             })
         } else { alert('please login or signup') }
@@ -191,7 +193,6 @@ class CafeProfile extends Component {
             <div className='reservation'>
                 <div>Thank you for reserving {currentReservation.seats} {currentReservation.seats > 1 ? `seats` : `seat`} with us!</div>
                 <div>Please be here by {finalTime}</div>
-                <div> put countdown in here</div>
             </div>
         )
     }
@@ -204,41 +205,68 @@ class CafeProfile extends Component {
         this.setState({ hover: value });
     }
 
+    avgStars = () => {
+        const { cafe } = this.state
+        let ratingArray = this.state.ratings.filter(rating => {
+            if (cafe != undefined && cafe.id === rating.shop_id) {
+                return rating
+            }
+        })
+        let starsArray = ratingArray.map(rating => (
+            rating.stars
+        ))
+        const avg = starsArray.reduce((a, b) => a + b, 0) / starsArray.length;
+
+        return [...Array(5)].map((star, index) => {
+            const ratingValue = index + 1;
+            console.log(avg)
+            return (
+                <label>
+                    <FaStar className='star' color={ratingValue <= avg ? "#ffc107" : "#e4e5e9"} size={20} />
+                </label>
+            )
+
+        })
+    }
 
     renderCafe = () => {
         const { cafe, ratings } = this.state
         const { currentUser } = this.props
-
         let seats = []
         for (let i = 0; i < cafe.seats; i++) {
             seats.push(<option value={i + 1}>{i + 1}</option>)
         }
         return (
             <div className='cafe-profile'>
-                <div>{cafe.name}</div>
-                <div>{cafe.address}</div>
                 {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
                 <MyGoogleMap cafe={cafe} />
                 {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
+                <div className='shopinfo'>
+                    <h1 className='shopname'>{cafe.name}</h1>
+                    <h3 className='shopaddress'>{cafe.address}</h3>
+                    {this.avgStars()}
+                </div>
 
-                <div>Available Seats: {this.state.seats}</div>
+                <div className='reservationform'>
+                    <div>Available Seats: {this.state.seats}</div>
+                    {this.state.currentReservation !== null ? null :
+                        <NativeSelect id="demo-customized-select-native" value={this.state.value} onChange={this.handleDropdown} input={<BootstrapInput />}>
+                            {seats.map(option => {
+                                return option
+                            })}
+                        </NativeSelect>
+                    }
+                    {this.state.currentReservation == null ? <Button variant="contained" color="primary" onClick={this.handleReservation}>Reserve</Button> : this.reservationInfo()}
+                    {this.state.currentReservation == null ? null : <Button onClick={this.deleteRes}> Delete Reservation </Button>}
+                </div>
 
-                {this.state.currentReservation !== null ? null :
-                    <NativeSelect id="demo-customized-select-native" value={this.state.value} onChange={this.handleDropdown} input={<BootstrapInput/>}>
-                        {seats.map(option => {
-                            return option
-                        })}
-                    </NativeSelect>
-                }
                 {/* R E S E R V A T I O N  I N F O  */}
 
-                {this.state.currentReservation == null ? <Button variant="contained" color="primary" onClick={this.handleReservation}>Reserve</Button> : this.reservationInfo()}
-                {this.state.currentReservation == null ? null : <Button onClick={this.deleteRes}> Delete Reservation </Button>}
                 {/* R A T I N G  F O R M  */}
                 <br></br>
-                <span>Rate this cafe!</span>
 
-                <div>
+                <div className='ratingform'>
+                    <span>Rate this cafe!</span>
                     {[...Array(5)].map((star, index) => {
                         const ratingValue = index + 1;
                         return (
@@ -250,23 +278,25 @@ class CafeProfile extends Component {
 
                     })}
                     {/* P O S T   A   R A T I N G  */}
+                    <form onSubmit={this.handleSubmit}>
+                        <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
+                        <input type='submit' value='Submit' />
+                    </form>
+                    {/* L I S T   O F   C O M M E N T S  */}
+                    {ratings.map((rating) => {
+                        if (rating.shop_id === cafe.id) {
+                            return <Rating key={rating.id} cafe={cafe} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete} />
+                        }
+                    })}
                 </div>
-                <form onSubmit={this.handleSubmit}>
-                    <input name="comment" placeholder="comment" value={this.state.comment} onChange={this.handleChange} />
-                    <input type='submit' value='Submit' />
-                </form>
-                {/* L I S T   O F   C O M M E N T S  */}
-                {ratings.map((rating) => {
-                    if (rating.shop_id === cafe.id) {
-                        return <Rating key={rating.id} cafe={cafe} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete} />
-                    }
-                })}
+
             </div>
         )
     }
 
     render() {
-        const { cafe } = this.state 
+        const { cafe } = this.state
+        this.avgStars()
         return (
             <div>
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}

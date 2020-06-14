@@ -48,7 +48,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.ratingObj)
     let filtered = this.state.cafes.filter(cafe => {
       return cafe.name.toLowerCase().includes(this.state.search.toLowerCase())
     })
