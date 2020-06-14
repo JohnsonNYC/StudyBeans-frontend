@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Rating(props) {
     const classes = useStyles();
     const { rating, cafe, currentUser, toggleDelete } = props
-    const renderDelete = <Button variant="contained" color="primary" onClick={() => toggleDelete(rating)}>Delete</Button>
+    const renderDelete = <Button color="primary" onClick={() => toggleDelete(rating)}>Delete</Button>
 
     
     const stars =
@@ -43,7 +43,7 @@ export default function Rating(props) {
 
 
     return (
-        <List className={classes.root}>
+        <List className={classes.root} style={{border: "1px solid purple", margin: "0 auto"}}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

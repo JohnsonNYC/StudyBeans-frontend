@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 export default function CafeContainer(props) {
     const classes = useStyles()
     const { cafes, search, searchChange } = props
-
     return (
         <React.Fragment>
             <CssBaseline />
@@ -86,9 +85,3 @@ export default function CafeContainer(props) {
     )
 }
 
-{/* <div className='cafe-container'>
-                    A L L   C A F E S
-                {cafes.map((cafe) =>
-                    <Cafe key={cafe.id} cafe={cafe} {...props.history} />
-                )}
-</div> */}

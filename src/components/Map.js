@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker } from 'react-google-maps'
+import '../App.css'
 const access = process.env.REACT_APP_API_KEY
 
 class MyGoogleMap extends Component {
@@ -21,13 +22,18 @@ class MyGoogleMap extends Component {
     render() {
         const WrappedMap = withScriptjs(withGoogleMap(this.Map))
         return (
-            <div style={{ width: '100vw', height: '50vh' }}>
-                {/* <WrappedMap
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${null}`}
-                    loadingElement={<div style={{ height: '100%' }} />}
-                    containerElement={<div style={{ height: '100%' }} />}
-                    mapElement={<div style={{ height: '100%' }} />}
-                /> */}
+            <div className='row'>
+                <div className='column' style={{ width: '50vw', height: '50vh'}} >
+                    <WrappedMap
+                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${null}`}
+                        loadingElement={<div style={{ height: '100%' }} />}
+                        containerElement={<div style={{ height: '100%' }} />}
+                        mapElement={<div style={{ height: '100%' }} />}
+                    />
+                </div>
+                <div className='column' style={{ width: '50vw', height: '50vh'}} >
+                    <img style={{width: '50vw', height: '50vh'}} src='https://www.contemporist.com/wp-content/uploads/2019/09/modern-coffee-shop-cafe-interior-design-grey-wood-290919-734-01-800x533.jpg' />
+                </div>
             </div>
         )
     }
