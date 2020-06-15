@@ -58,8 +58,7 @@ export default function Cafe(props) {
                     {cafe.name}
                 </Typography>
                 <Typography>
-                    <PhoneIcon />
-                    <WifiIcon />
+                    {cafe.bio}
                 </Typography>
             </CardContent>
             <CardActions>
