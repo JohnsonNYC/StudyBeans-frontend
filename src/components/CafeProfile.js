@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import Rating from './Rating'
-import '../App.css'
-import { FaStar } from 'react-icons/fa'
-import MyGoogleMap from './Map'
-import Button from '@material-ui/core/Button'
-import NativeSelect from '@material-ui/core/NativeSelect'
-import InputBase from '@material-ui/core/InputBase'
+import Rating from './Rating';
+import '../App.css';
+import { FaStar } from 'react-icons/fa';
+import MyGoogleMap from './Map';
+import Button from '@material-ui/core/Button';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from '@material-ui/core/styles';
+import Modal from 'react-modal';
 
 
 const shopURL = 'http://localhost:3000/shops'
@@ -49,8 +50,8 @@ const BootstrapInput = withStyles((theme) => ({
     },
 }))(InputBase);
 
-
-
+Modal.setAppElement('#root');
+// let subtitle
 class CafeProfile extends Component {
     state = {
         cafe: null, // cafe data cdm
@@ -61,7 +62,8 @@ class CafeProfile extends Component {
         ratings: [], // ratings data cdm
         currentReservation: null, // ALL ratings 
         currentRating: null,
-        hover: null
+        hover: null,
+        isOpen: false
     }
 
     //fetch all shops and ratings 
@@ -238,14 +240,14 @@ class CafeProfile extends Component {
         }
         return (
             <div className='cafe-profile'>
-                {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
-                <MyGoogleMap cafe={cafe} />
-                {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
                 <div className='shopinfo'>
                     <h1 className='shopname'>{cafe.name}</h1>
                     <h3 className='shopaddress'>{cafe.address}</h3>
                     {this.avgStars()}
                 </div>
+                {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
+                <MyGoogleMap cafe={cafe} />
+                {/* ////////////////////////////////////////GOOGLE STUFF//////////////////////////////////////// */}
 
                 <div className='reservationform'>
                     <div>Available Seats: {this.state.seats}</div>
@@ -294,11 +296,26 @@ class CafeProfile extends Component {
         )
     }
 
+    openModal = () => {
+        this.setState({ isOpen: true });
+    }
+    // afterOpenModal = () => {
+    //     subtitle.style.color = '#f00';
+    // }
+
+    closeModal =()=>{
+        this.setState({ isOpen:false  });
+    }
+
     render() {
         const { cafe } = this.state
         this.avgStars()
         return (
             <div>
+                {/* <button onClick={this.openModal}>Modal</button>
+                <Modal isOpen={this.state.isOpen} onRequestClose={this.closeModal} style={{top: "50%",left:"50%",right:"auto",bottom:"auto",marginRight:"-50%",transform:"translate(-50%,-50%"}}>
+                    <h2>Hello</h2>
+                </Modal> */}
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
             </div>
         );

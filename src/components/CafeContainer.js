@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         // backgroundColor: theme.palette.background.paper,
         backgroundImage: 'url("https://images.wallpaperscraft.com/image/cup_black_white_135256_2560x1440.jpg")',
         backgroundSize: "105% auto",
-        backgroundRepeat:"no-repeat",
+        backgroundRepeat: "no-repeat",
         padding: theme.spacing(8, 0, 6),
     },
     heroButtons: {
@@ -56,27 +56,24 @@ export default function CafeContainer(props) {
     return (
         <React.Fragment>
             <CssBaseline />
-            <AppBar position="relative">
-                <Searchbar cafes={cafes} searchChange={searchChange} search={search} />
-            </AppBar>
             <main>
                 <div className={classes.heroContent} >
                     <Container maxWidth="sm">
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                             Study Beans Partners
                         </Typography>
-                        <Typography variant="h5" align="center" style={{color:'#8B4513'}} paragraph>
+                        <Typography variant="h5" align="center" style={{ color: '#8B4513' }} paragraph>
                             Welcome to Study Beans. A place for you to find a cafe to do your work. Check out the cafes below and reserve your seat when you find a cafe you fancy. Cheers!
                         </Typography>
                     </Container>
                 </div>
                 <Container className={classes.cardGrid} maxWidth="md">
-                    {/* End hero unit */}
+                    <Searchbar cafes={cafes} searchChange={searchChange} search={search} style={{ position: 'relative' }} variant='outlined' />
                     <Grid container spacing={4}>
                         {cafes.map((cafe) => (
                             <Grid item key={cafe.id} xs={12} sm={6} md={4}>
                                 <Card className={classes.card}>
-                                    <Cafe key={cafe.id} cafe={cafe} {...props.history}/>
+                                    <Cafe key={cafe.id} cafe={cafe} {...props.history} />
                                 </Card>
                             </Grid>
                         ))}

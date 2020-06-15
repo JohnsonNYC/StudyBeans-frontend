@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
+
 
 class Searchbar extends Component {
 
@@ -7,7 +9,8 @@ class Searchbar extends Component {
         const {search, searchChange} = this.props
         return (
             <div className='search'>
-                <TextField id="outlined-basic" value={search} name='search' placeholder='search by cafe name' onChange={searchChange} variant="outlined"/>
+                <SearchIcon style={{marginTop: "20px"}}/>
+                <TextField id="outlined-basic" value={search} name='search' placeholder='search by cafe name' onChange={searchChange} variant="outlined" style={{color:'white',backgroundColor:'white', marginBottom: "15px"}}/>
             </div>
         );
     }
