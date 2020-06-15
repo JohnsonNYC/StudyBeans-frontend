@@ -87,7 +87,7 @@ class Auth extends Component {
         return (
             <Grid container component="main" className='rootTwo' style={{ height: '100vh' }}>
                 <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} className='image' style={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundRepeat: 'no-repeat', backgroundColor: '#A9A9A9', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                <Grid item xs={false} sm={4} md={7} className='image' style={{ backgroundImage: 'url(https://source.unsplash.com/1600x900/?coffee)', backgroundRepeat: 'no-repeat', backgroundColor: '#A9A9A9', backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <div className='paper' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',margin: 30  }} >
                         <Avatar className='avatar' style={{margin: 8, backgroundColor:'#CD5C5C',border:"1px solid purple"}}>
@@ -140,16 +140,9 @@ class Auth extends Component {
     renderSignup = () => {
         const { username, password, name, confirmation, email } = this.state;
         return (
-            // <>
-            //     <input name="name" placeholder="Name" value={name} onChange={this.handleChange} />
-            //     <input name="email" placeholder="Email" value={email} onChange={this.handleChange} />
-            //     <input name="username" placeholder="Username" value={username} onChange={this.handleChange} />
-            //     <input name="password" placeholder="Password" type="password" value={password} onChange={this.handleChange} />
-            //     <input name="confirmation" placeholder="Confirm Password" type="password" value={confirmation} onChange={this.handleChange} />
-            // </>
             <Grid container component="main" className={'height'} style={{ height: '100vh' }}>
                 <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} className={'image'} style={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundRepeat: 'no-repeat', backgroundColor: '#A9A9A9', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                <Grid item xs={false} sm={4} md={7} className={'image'} style={{ backgroundImage: 'url(https://source.unsplash.com/1600x900/?coffee)', backgroundRepeat: 'no-repeat', backgroundColor: '#A9A9A9', backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <div className='paper' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',margin: 30  }}>
                         <Avatar className='avatar' style={{margin: 8, backgroundColor:'#CD5C5C',border:"1px solid purple"}}>
