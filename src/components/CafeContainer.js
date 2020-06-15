@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     heroContent: {
         // backgroundColor: theme.palette.background.paper,
         backgroundImage: 'url("https://images.wallpaperscraft.com/image/cup_black_white_135256_2560x1440.jpg")',
-        backgroundSize: "100% auto",
+        backgroundSize: "105% auto",
         backgroundRepeat:"no-repeat",
         padding: theme.spacing(8, 0, 6),
     },
