@@ -21,6 +21,7 @@ class MyGoogleMap extends Component {
 
     render() {
         const WrappedMap = withScriptjs(withGoogleMap(this.Map))
+        const {cafe} = this.props
         return (
             <div className='row'>
                 <div className='column' style={{ width: '50vw', height: '50vh'}} >
@@ -32,7 +33,7 @@ class MyGoogleMap extends Component {
                     />
                 </div>
                 <div className='column' style={{ width: '50vw', height: '50vh'}} >
-                    <img style={{width: '50vw', height: '50vh'}} src='https://www.contemporist.com/wp-content/uploads/2019/09/modern-coffee-shop-cafe-interior-design-grey-wood-290919-734-01-800x533.jpg' />
+                    <img style={{width: '50vw', height: '50vh'}} src={cafe.img} />
                 </div>
             </div>
         )
