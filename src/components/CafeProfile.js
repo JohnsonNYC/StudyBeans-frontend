@@ -50,8 +50,6 @@ const BootstrapInput = withStyles((theme) => ({
     },
 }))(InputBase);
 
-Modal.setAppElement('#root');
-// let subtitle
 class CafeProfile extends Component {
     state = {
         cafe: null, // cafe data cdm
@@ -144,8 +142,7 @@ class CafeProfile extends Component {
                 body: JSON.stringify({
                     seats: cafe.seats - value
                 })
-            }).then(resp => resp.json()).then(cafe => this.setState({ seats: cafe.seats }))
-
+            }).then(resp => resp.json()).then(cafe => this.setState({ seats: cafe.seats, openModal: true }))
         } else {
             alert('please sign in')
             this.props.history.push('/login')
@@ -179,7 +176,9 @@ class CafeProfile extends Component {
                     stars: 0
                 })
             })
-        } else { alert('please login or signup') }
+        } else if (currentUser === null || currentUser === undefined) {
+            alert('please login or signup')
+        }
     }
 
     reservationInfo = () => {
@@ -303,8 +302,8 @@ class CafeProfile extends Component {
     //     subtitle.style.color = '#f00';
     // }
 
-    closeModal =()=>{
-        this.setState({ isOpen:false  });
+    closeModal = () => {
+        this.setState({ isOpen: false });
     }
 
     render() {
@@ -312,10 +311,6 @@ class CafeProfile extends Component {
         this.avgStars()
         return (
             <div>
-                {/* <button onClick={this.openModal}>Modal</button>
-                <Modal isOpen={this.state.isOpen} onRequestClose={this.closeModal} style={{top: "50%",left:"50%",right:"auto",bottom:"auto",marginRight:"-50%",transform:"translate(-50%,-50%"}}>
-                    <h2>Hello</h2>
-                </Modal> */}
                 {cafe ? this.renderCafe() : <div>No Cafe Selected</div>}
             </div>
         );
