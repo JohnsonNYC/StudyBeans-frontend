@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import Rating from './Rating'
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
+import { Avatar } from '@material-ui/core';
+
+
 
 class UserProfile extends Component {
-
     state = {
         rating: [],
         reservations: []
@@ -41,23 +46,32 @@ class UserProfile extends Component {
 
         if (currentUser !== null) {
             return <div>
-                <h3> Ratings History </h3>
-                <div> {currentUser.name} </div>
-                {rating.map((rating) => {
-                    if (rating && rating.user_id === currentUser.id) {
-                        return <Rating key={rating.id} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete} />
-                    }
-                })}
-                <h3> Reservation History</h3>
-                {reservations.map((reservation) => {
-                    if (reservation.user_id === currentUser.id) {
-                        return <div className='reservation-history' style={{border:'black'}}>
-                            <div>Shop Name:{reservation.shop.name} </div>
-                            <div>Shop Address: {reservation.shop.address} </div>
-                            <div>Seats: {reservation.seats} </div>
-                        </div>
-                    }
-                })}
+                <Avatar src={currentUser.avatar} style={{ margin: "auto" }} />
+                <Typography>
+                    <h1>{currentUser.name}</h1>
+                </Typography>
+                <Grid container spacing={3} style={{ border: '2px solid purple', marginTop: 'auto' }}>
+                    <Grid item xs={12} sm={6} >
+                        <h3> Ratings History </h3>
+                        {rating.map((rating) => {
+                            if (rating && rating.user_id === currentUser.id) {
+                                return <Rating key={rating.id} rating={rating} currentUser={currentUser} toggleDelete={this.toggleDelete} />
+                            }
+                        })}
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                        <h3> Reservation History</h3>
+                        {reservations.map((reservation) => {
+                            if (reservation.user_id === currentUser.id) {
+                                return <div className='reservation-history' style={{ border: "1px solid black", position: 'relative', marginRight: '220px', marginLeft: '220px' }}>
+                                    <div>{reservation.shop.name} </div>
+                                    <div>{reservation.shop.address} </div>
+                                    <div>{reservation.seats} </div>
+                                </div>
+                            }
+                        })}
+                    </Grid>
+                </Grid>
             </div>
         } else {
             return null
@@ -67,9 +81,6 @@ class UserProfile extends Component {
     render() {
         const { currentUser } = this.props
         const { rating, reservations } = this.state
-        console.log(currentUser)
-        console.log(rating)
-        console.log(reservations)
         return (
             <div>
                 {this.renderUserInfo()}
