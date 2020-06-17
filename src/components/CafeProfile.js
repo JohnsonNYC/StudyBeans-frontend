@@ -175,6 +175,7 @@ class CafeProfile extends Component {
                     comment: '',
                     stars: 0
                 })
+                console.log('res',res)
             })
         } else if (currentUser === null || currentUser === undefined) {
             alert('please login or signup')

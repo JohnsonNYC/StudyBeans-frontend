@@ -27,6 +27,8 @@ export default function Rating(props) {
     const classes = useStyles();
     const { rating, cafe, currentUser, toggleDelete } = props
     const renderDelete = <Button color="primary" onClick={() => toggleDelete(rating)}>Delete</Button>
+    console.log('rating',rating)
+    console.log('currentUser', currentUser)
 
     
     const stars =
@@ -46,7 +48,7 @@ export default function Rating(props) {
         <List className={classes.root} style={{border: "1px solid purple", margin: "0 auto"}}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src={rating.user.avatar || currentUser.avatar} />
+                    <Avatar alt="Remy Sharp" src={rating.user===undefined? currentUser.avatar : rating.user.avatar } />
                 </ListItemAvatar>
                 <ListItemText
                     primary={stars}
