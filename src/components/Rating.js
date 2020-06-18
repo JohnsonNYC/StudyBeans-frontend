@@ -45,7 +45,7 @@ export default function Rating(props) {
 
 
     return (
-        <List className={classes.root} style={{border: "1px solid purple", margin: "0 auto"}}>
+        <List className={classes.root} style={{border: "1px solid black", margin: "0 auto",backgroundColor:"#F4E2D2"}}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                     <Avatar alt="Remy Sharp" src={rating.user===undefined? currentUser.avatar : rating.user.avatar } />

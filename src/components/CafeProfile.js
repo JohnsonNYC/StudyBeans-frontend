@@ -239,7 +239,7 @@ class CafeProfile extends Component {
         }
         return (
             <div className='cafe-profile'>
-                <div className='shopinfo'>
+                <div className='shopinfo' style={{backgroundColor:"#E1B894"}}>
                     <h1 className='shopname'>{cafe.name}</h1>
                     <h3 className='shopaddress'>{cafe.address}</h3>
                     {this.avgStars()}
@@ -264,7 +264,6 @@ class CafeProfile extends Component {
                 {/* R E S E R V A T I O N  I N F O  */}
 
                 {/* R A T I N G  F O R M  */}
-                <br></br>
 
                 <div className='ratingform'>
                     <span>Rate this cafe!</span>

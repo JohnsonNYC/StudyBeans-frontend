@@ -92,12 +92,12 @@ input[type='radio']{
 }
 .reservationform{
   position: relative;
-  border: 2px solid purple;
+  background-color: #E9E2D7;
 }
 
 .ratingform{
-  border: 2px solid orangered;
   position: relative;
+  background-color:  #B1C5C3;
 }
 
 .bg-image {
