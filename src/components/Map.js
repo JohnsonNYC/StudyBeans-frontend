@@ -27,7 +27,7 @@ class MyGoogleMap extends Component {
             <div className='row'>
                 <div className='column' style={{ width: '50vw', height: '50vh'}} >
                     <WrappedMap
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${null}`}
+                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${access}`}
                         loadingElement={<div style={{ height: '100%' }} />}
                         containerElement={<div style={{ height: '100%' }} />}
                         mapElement={<div style={{ height: '100%' }} />}
