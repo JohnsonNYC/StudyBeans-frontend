@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from '@material-ui/core/styles';
-import Modal from 'react-modal';
 
 
 const shopURL = 'http://localhost:3000/shops'
@@ -142,7 +141,7 @@ class CafeProfile extends Component {
                 body: JSON.stringify({
                     seats: cafe.seats - value
                 })
-            }).then(resp => resp.json()).then(cafe => this.setState({ seats: cafe.seats, openModal: true }))
+            }).then(resp => resp.json()).then(cafe => this.setState({ seats: cafe.seats}))
         } else {
             alert('please sign in')
             this.props.history.push('/login')
@@ -240,7 +239,7 @@ class CafeProfile extends Component {
         }
         return (
             <div className='cafe-profile'>
-                <div className='shopinfo'>
+                <div className='shopinfo' style={{backgroundColor:"#E1B894"}}>
                     <h1 className='shopname'>{cafe.name}</h1>
                     <h3 className='shopaddress'>{cafe.address}</h3>
                     {this.avgStars()}
@@ -265,7 +264,6 @@ class CafeProfile extends Component {
                 {/* R E S E R V A T I O N  I N F O  */}
 
                 {/* R A T I N G  F O R M  */}
-                <br></br>
 
                 <div className='ratingform'>
                     <span>Rate this cafe!</span>
@@ -296,16 +294,9 @@ class CafeProfile extends Component {
         )
     }
 
-    openModal = () => {
-        this.setState({ isOpen: true });
-    }
-    // afterOpenModal = () => {
-    //     subtitle.style.color = '#f00';
-    // }
 
-    closeModal = () => {
-        this.setState({ isOpen: false });
-    }
+
+
 
     render() {
         const { cafe } = this.state

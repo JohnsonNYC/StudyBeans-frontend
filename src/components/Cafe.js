@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../App.css'
 
 import CardActions from '@material-ui/core/CardActions';
@@ -7,8 +7,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import WifiIcon from '@material-ui/icons/Wifi';
-import PhoneIcon from '@material-ui/icons/Phone';
 
 
 const useStyles = makeStyles((theme) => ({

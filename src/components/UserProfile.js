@@ -79,8 +79,6 @@ class UserProfile extends Component {
     }
 
     render() {
-        const { currentUser } = this.props
-        const { rating, reservations } = this.state
         return (
             <div>
                 {this.renderUserInfo()}
