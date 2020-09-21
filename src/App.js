@@ -11,6 +11,7 @@ import CafeProfile from './components/CafeProfile'
 import Home from './components/Home'
 import UserProfile from './components/UserProfile'
 
+// API 
 const shopURL = 'http://localhost:3000/shops'
 
 export default class App extends Component {
@@ -22,11 +23,11 @@ export default class App extends Component {
     filtered: null,
     ratingObj: null
   }
-  //Search  Bar Logic
+  //Search  Bar Logic CONTROLLED FROM 
   searchChange= (e) =>{
     this.setState({ [e.target.name]: e.target.value });
 }
-  // POPULATES WITH CAFES 
+  // POPULATES WITH CAFES - getting data before app shows
   componentDidMount() {
     fetch(shopURL)
       .then(resp => resp.json())
@@ -34,7 +35,7 @@ export default class App extends Component {
         this.setState({ cafes });
       })
   }
-  // updates state of 'user' to peron who is logged in
+  // updates state of 'user' to person who is logged in
   updateUser =(userObj)=> {
     this.setState({ currentUser: userObj  });
   }
@@ -51,6 +52,7 @@ export default class App extends Component {
     let filtered = this.state.cafes.filter(cafe => {
       return cafe.name.toLowerCase().includes(this.state.search.toLowerCase())
     })
+    console.log(this.state.currentUser)
     return (
       <div className="App">
         <Navbar currentUser={this.state.currentUser} toggleLogout={this.toggleLogout} ratingObj={this.state.ratingObj}/>

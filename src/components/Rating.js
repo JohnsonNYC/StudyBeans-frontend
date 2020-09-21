@@ -27,17 +27,17 @@ export default function Rating(props) {
     const classes = useStyles();
     const { rating, cafe, currentUser, toggleDelete } = props
     const renderDelete = <Button color="primary" onClick={() => toggleDelete(rating)}>Delete</Button>
-    console.log('rating',rating)
+    console.log('rating', rating)
     console.log('currentUser', currentUser)
 
-    
+
     const stars =
         <div>
             {[...Array(rating.stars)].map((star, index) => {
                 const ratingValue = index + 1;
                 return (
                     <label>
-                        <FaStar className='star' color="#ffc107" size={20}/>
+                        <FaStar className='star' color="#ffc107" size={20} />
                     </label>
                 )
             })}
@@ -45,10 +45,10 @@ export default function Rating(props) {
 
 
     return (
-        <List className={classes.root} style={{border: "1px solid black", margin: "0 auto",backgroundColor:"#F4E2D2"}}>
+        <List className={classes.root} style={{ border: "1px solid black", margin: "0 auto", backgroundColor: "#F4E2D2" }}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src={rating.user===undefined? currentUser.avatar : rating.user.avatar } />
+                    <Avatar alt="Remy Sharp" src={rating.user === undefined ? currentUser.avatar : rating.user.avatar} />
                 </ListItemAvatar>
                 <ListItemText
                     primary={stars}
@@ -60,8 +60,9 @@ export default function Rating(props) {
                                 className={classes.inline}
                                 color="textPrimary"
                             >
-                                {rating.comments}
+                                {rating.user? rating.user.name: currentUser.name} - 
                             </Typography>
+                            {rating.comments}
                             {currentUser && currentUser.id === rating.user_id ? renderDelete : null}
                         </React.Fragment>
                     }
